@@ -82,30 +82,31 @@
         depositBalance.addEventListener('click', function () {
             const depositInput = document.getElementById('depositValue').value;
             const depositInputNumber = parseFloat(depositInput);
-            const oldDepositBalance = document.getElementById('depositOldValue').innerText;
-            const oldDepositNumber = parseFloat(oldDepositBalance);
-            const addedValue = depositInputNumber + oldDepositNumber;
-            document.getElementById('depositOldValue').innerText = addedValue;
+            updateSpan('depositOldValue', depositInputNumber);
             document.getElementById('depositValue').value = "";
-            const oldBalance = document.getElementById('oldBalance').innerText;
-            const oldBalanceNumber = parseFloat(oldBalance);
-            const addedBalance = oldBalanceNumber + depositInputNumber;
-            document.getElementById('oldBalance').innerText = addedBalance;
+            updateSpan('oldBalance', depositInputNumber);
         })
+
         const withdrawBalance = document.getElementById('withdrawBtn');
         withdrawBalance.addEventListener('click', function(){
             const withdrawInput = document.getElementById('withdrawInput').value;
             const withdrawInputNumber = parseFloat(withdrawInput);
-            const withdrawOldBalance = document.getElementById('withdrawOldValue').innerText;
-            const withdrawOldBalanceNumber = parseFloat(withdrawOldBalance);
-            const addedWithdrawValue = withdrawInputNumber + withdrawOldBalanceNumber;
-            document.getElementById('withdrawOldValue').innerText = addedWithdrawValue;
+            updateSpan('withdrawOldValue', withdrawInputNumber)
             document.getElementById('withdrawInput').value = "";
+            updateSpan('oldBalance', withdrawInputNumber * -1);
             const oldBalance = document.getElementById('oldBalance').innerText;
-            const oldBalanceNumber = parseFloat(oldBalance);
-            const notAddedValue = oldBalanceNumber + withdrawInputNumber * -1;
-            document.getElementById('oldBalance').innerText = notAddedValue;
+            if(oldBalance < 0){
+                document.getElementById('oldBalance').innerText = 'You have no balance at this time';
+            }
         })
+
+        function updateSpan(id,number){
+            const oldBalance = document.getElementById(id).innerText;
+            const oldBalanceNumber = parseFloat(oldBalance);
+            const addedBalance = oldBalanceNumber + number;
+            document.getElementById(id).innerText = addedBalance;
+            
+        }
 
 
     </script>
